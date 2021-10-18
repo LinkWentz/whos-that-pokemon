@@ -1,4 +1,5 @@
 ### Motivation
+The goal of this project is to create a classifier that can identify 1st generation pokemon. Despite what the name suggests, this is not a classifier designed to play the "Who's that pokemon?" game from the anime, though images from that game will be tested later. As far as what the motivation behind this project is, I'm curious how a CNN will be able to adapt to images that are mainly hand drawn (specifically whether transfer learning will be less effective in this context) and how good performance will be with 151 different classes.
 
 ### File Structure
 ```
