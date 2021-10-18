@@ -20,5 +20,6 @@
 ### Results
 
 ### Sources
+- [7,000 Labeled Pokemon](https://www.kaggle.com/lantian773030/pokemonclassification): The dataset used for this project.
 
 ### Dependencies
