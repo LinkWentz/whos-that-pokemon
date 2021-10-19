@@ -5,17 +5,25 @@ The goal of this project is to create a classifier that can identify 1st generat
 ```
 .
 ├── PokemonData                  | All the images used to train and validate every model.
-│   ├── Abra
-│   │   ├── .jpg
-│   │   ├── .jpg
-│   │   ├── ...
-│   ├── Aerodactyl
-│   ├── Alakazam
-│   ├── ...
+│   ├── Test
+│       ├── Abra
+│       │   ├── .jpg
+│       │   ├── .jpg
+│       │   ├── ...
+│       ├── Aerodactyl
+│       ├── Alakazam
+│       ├── ...
+│   └── Train
+│       ├── Abra
+│       │   ├── .jpg
+│       │   ├── .jpg
+│       │   ├── ...
+│       ├── Aerodactyl
+│       ├── Alakazam
+│       ├── ...
 ├── pokemon_classification.ipynb | All model testing and analysis in the project.
 └── README.md                    | What you're reading right now!
 ```
-
 ### Process
 
 ### Results
