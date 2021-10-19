@@ -6,13 +6,13 @@ The goal of this project is to create a classifier that can identify 1st generat
 .
 ├── PokemonData                  | All the images used to train and validate every model.
 │   ├── Test
-│       ├── Abra
-│       │   ├── .jpg
-│       │   ├── .jpg
-│       │   ├── ...
-│       ├── Aerodactyl
-│       ├── Alakazam
-│       ├── ...
+│   │   ├── Abra
+│   │   │   ├── .jpg
+│   │   │   ├── .jpg
+│   │   │   ├── ...
+│   │   ├── Aerodactyl
+│   │   ├── Alakazam
+│   │   ├── ...
 │   └── Train
 │       ├── Abra
 │       │   ├── .jpg
