@@ -253,6 +253,7 @@ So after testing both a scratch built model and two transfer learning models, it
 
 ### Dependencies
 - [Python 3.9.7](https://www.python.org/)
+- [Pillow 8.3.1](https://pypi.org/project/Pillow/): Pillow is the friendly PIL fork by Alex Clark and Contributors.
 - [NumPy 1.19.5](https://pypi.org/project/numpy/): Package for array computing with Python.
 - [Pandas 1.3.3](https://pypi.org/project/pandas/): Python package that provides fast, flexible, and expressive data structures.
 - [TensorFlow 2.6.0](https://pypi.org/project/tensorflow/): TensorFlow is an open source machine learning framework for everyone.
