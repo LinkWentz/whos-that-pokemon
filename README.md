@@ -49,7 +49,7 @@ flow = gen.flow_from_directory('PokémonData/Train') # This acts as a python gen
 
 Here is a sample of the augmented images for reference.
 
-![Training Images](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/data_example.jpg)
+![Training Images](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/data_example.jpg)
 
 ##### Model Design
 Three different models were trained on the data, each trained for 30 epochs. In all there was one scratch built model, and two transfer learning models made from VGG16 and Xception. For the scratch model, I designed it by starting with a very basic model, and making it more and more complex as needed by adding more layers, filters, and neurons. I'm sure I could have improved it even more but I am happy with the results that I got. For the transfer learning models, each model was loaded with its ImageNet weights from the Keras applications module, and the convolutional layers of each model were made untrainable in order to preserve those weights and avoid catastrophic forgetting. The tops of the models were removed and replaced with a dense layer and an output layer which accommodated the data. 
@@ -182,8 +182,8 @@ After fine tuning, I was able to a fairly good place in terms of performance, at
        Max: 0.00010
        Min: 0.00010
   ```
-  ![Accuracy](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/scratch_model_accuracy.jpg)
-  ![Loss](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/scratch_model_loss.jpg)
+  ![Accuracy](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/scratch_model_accuracy.jpg)
+  ![Loss](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/scratch_model_loss.jpg)
   
 </details>
 <details>
@@ -206,8 +206,8 @@ After fine tuning, I was able to a fairly good place in terms of performance, at
        Max: 0.00010
        Min: 0.00000
   ```
-  ![Accuracy](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/vgg16_model_accuracy.jpg)
-  ![Loss](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/vgg16_model_loss.jpg)
+  ![Accuracy](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/vgg16_model_accuracy.jpg)
+  ![Loss](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/vgg16_model_loss.jpg)
 </details>
 <details>
   <summary>Xception (Transfer Learning)</summary>
@@ -229,28 +229,28 @@ After fine tuning, I was able to a fairly good place in terms of performance, at
        Max: 0.00010
        Min: 0.00010
   ```
-  ![Accuracy](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/xception_model_accuracy.jpg)
-  ![Loss](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/xception_model_loss.jpg)
+  ![Accuracy](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/xception_model_accuracy.jpg)
+  ![Loss](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/xception_model_loss.jpg)
 </details>
 As for how the models perform in a game of "Who's That Pokémon?!", the models each made predictions on 9 silhouettes of the same 9 pokémon. Here are the silhouettes for reference and in case you would like to play along:
 
-![Silhouettes](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/Silhouettes.jpg)
+![Silhouettes](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/Silhouettes.jpg)
 
 And here are the answers and the predictions each model made:
 
-![Silhouette Predictions](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/silhouette_predictions.jpg)
+![Silhouette Predictions](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/silhouette_predictions.jpg)
 
 As you can see the scratch model performed the worst, seeming to favor Magnemite the majority of the time. In all the scratch model actually failed to guess even a single pokémon correctly. VGG16 performed better, getting Dugtrio, though still showing that favoritism, in this instance towards Rapidash. Xception performed the best managing to guess both Articuno and Rhydon, though overall none of the models performed especially well. Obviously, the models weren't trained to handle this use case though. If we wanted to do that, we would use silhouettes as training data. So, let's look at how the models perform when predicting on the full color versions instead:
 
-![Color Predictions](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/color_predictions.jpg)
+![Color Predictions](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/color_predictions.jpg)
 
 Here we can see the model performance is much more consistent, though not perfect. The scratch model, for its part. still fails to identify a single pokémon, and still favors Magnemite. The transfer learning models however perform much better. VGG16 and Xception both correctly identified 6 pokémon; in fact almost the same 6 save for Rhydon and Nidorina. They do fail to recognize Dodrio and Kingler however, which suggests that there is still many improvements to be made.
 
 So after testing both a scratch built model and two transfer learning models, it appears that overall, transfer learning with ImageNet weights is much better approach, or at least more efficient. Given time and more computing resources we could of course develop a much better scratch model, but as it stands, transfer learning appears to be not only a viable approach for this and similar tasks, but much easier to achieve good performance with.
 
 ### Sources
-- [7,000 Labeled Pokémon](https://www.kaggle.com/lantian773030/pokémonclassification): The dataset used for this project.
-- [Pokémon Database](https://pokémondb.net/pokedex/national): The source for all the sprites used for "Who's That Pokémon"
+- [7,000 Labeled Pokémon](https://www.kaggle.com/lantian773030/pokemonclassification): The dataset used for this project.
+- [Pokémon Database](https://pokemondb.net/pokedex/national): The source for all the sprites used for "Who's That Pokémon"
 
 ### Dependencies
 - [Python 3.9.7](https://www.python.org/)
