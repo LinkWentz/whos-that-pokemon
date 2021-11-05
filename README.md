@@ -160,7 +160,7 @@ The structures of each model are listed below:
 </details>
 
 ### Results
-After fine tuning, I was able to a fairly good place in terms of performance, at least in my opinion. The scratch model wound up at around 68% validation accuracy, which is not the best it could be, but something that, after a lot of tuning, I was pretty happy with. As for transfer learning, both models had a validation accuracy above 90%, which I was also fairly happy with. The full results for each model including plots of accuracy and loss over each epoch are listed below:
+I decided to use categorical accuracy as the main metric for judging model performance, simply because this is a classification problem and we don't need to minimize any type of error in particular, just errors in general. After fine tuning, I was able to a get the models to a fairly good place in terms of performance. The scratch model wound up at around 68% validation accuracy, which is not the best it could be, but something that, after a lot of tuning, I was pretty happy with. As for transfer learning, both models had a validation accuracy above 90%, which I was also fairly happy with. The full results for each model including plots of accuracy and loss over each epoch are listed below:
 
 <details>
   <summary>Scratch Built Model</summary>
