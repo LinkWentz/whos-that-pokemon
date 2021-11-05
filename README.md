@@ -1,9 +1,13 @@
 ### Summary
 The goal of this project is to investigate the viability of transfer learning using models pretrained with ImageNet weights for classifying Pokemon. I trained three models, one made from scratch and two made from transfer learning models, and I had the extra caveat of training them on my own computer. My computer is somewhat dated but not uncapable, so this wasn't that much of a constraint, but the fact remains that it was a part of the decision making process in the development of this project. Additionally, the data only contained pokemon from the first generation, but the findings in this project may be used to develop a more inclusive and robust model in future.
 
-### File Structure
+### Directory
 ```
 .
+├── Plots                        | Every visualization generated in the notebook.
+│   ├── .jpg
+│   ├── .jpg
+│   └── ...
 ├── PokemonData                  | All the images used to train and validate every model.
 │   ├── Test
 │   │   ├── Abra
