@@ -250,6 +250,7 @@ So after testing both a scratch built model and two transfer learning models, it
 
 ### Sources
 - [7,000 Labeled Pokemon](https://www.kaggle.com/lantian773030/pokemonclassification): The dataset used for this project.
+- [Pokemon Database](https://pokemondb.net/pokedex/national): The source for all the sprites used for "Who's That Pokemon"
 
 ### Dependencies
 - [Python 3.9.7](https://www.python.org/)
