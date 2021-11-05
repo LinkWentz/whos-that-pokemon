@@ -1,5 +1,5 @@
 ### Summary
-The goal of this project is to investigate the viability of transfer learning using models pretrained with ImageNet weights for classifying Pokemon. I trained three models, one made from scratch and two made from transfer learning models, and I had the extra caveat of training them on my own computer. My computer is somewhat dated but not uncapable, so this wasn't that much of a constraint, but the fact remains that it was a part of the decision making process in the development of this project. Additionally, the data only contained pokemon from the first generation, but the findings in this project may be used to develop a more inclusive and robust model in future.
+The goal of this project is to investigate the viability of transfer learning using models pretrained with ImageNet weights for classifying Pokémon. I trained three models, one made from scratch and two made from transfer learning models, and I had the extra caveat of training them on my own computer. My computer is somewhat dated but not uncapable, so this wasn't that much of a constraint, but the fact remains that it was a part of the decision making process in the development of this project. Additionally, the data only contained pokémon from the first generation, but the findings in this project may be used to develop a more inclusive and robust model in future.
 
 ### Directory
 ```
@@ -8,7 +8,7 @@ The goal of this project is to investigate the viability of transfer learning us
 │   ├── .jpg
 │   ├── .jpg
 │   └── ...
-├── PokemonData                  | All the images used to train and validate every model.
+├── PokémonData                  | All the images used to train and validate every model.
 │   ├── Test
 │   │   ├── Abra
 │   │   │   ├── .jpg
@@ -25,12 +25,12 @@ The goal of this project is to investigate the viability of transfer learning us
 │       ├── Aerodactyl
 │       ├── Alakazam
 │       ├── ...
-├── pokemon_classification.ipynb | All model testing and analysis in the project.
+├── pokémon_classification.ipynb | All model testing and analysis in the project.
 └── README.md                    | What you're reading right now!
 ```
 ### Process
 ##### Data Handling
-The [dataset](https://www.kaggle.com/lantian773030/pokemonclassification) consists of 7,000 images of 149 Pokémon from the first generation of Pokemon. Two pokemon were excluded, Nidoran and Nidoran. No that's not a typo, and I believe that the fact that these two seperate pokemon share the same name is the reason why they were excluded in the first place. Loading, labelling, resizing, and augmenting the data is done in what is essentially a single step using the ImageDataGenerator class from Keras. Using the flow_from_directory method, like in the example below, we can sample images from a directory - so long as the images are in seperate folders according to their classes - and automatically load, label, augment, and resize them all at once.
+The [dataset](https://www.kaggle.com/lantian773030/pokémonclassification) consists of 7,000 images of 149 Pokémon from the first generation of Pokémon. Two pokémon were excluded, Nidoran and Nidoran. No that's not a typo, and I believe that the fact that these two separate pokémon share the same name is the reason why they were excluded in the first place. Loading, labelling, resizing, and augmenting the data is done in what is essentially a single step using the ImageDataGenerator class from Keras. Using the flow_from_directory method, like in the example below, we can sample images from a directory - so long as the images are in separate folders according to their classes - and automatically load, label, augment, and resize them all at once.
 
 This is where we encounter the main difficulty I had during this project: hardware limitations. I'll spare you the details, but it came down to two options for how the data would be passed to the fit methods of the models. The first was to pass the flow of the ImageDataGenerator directly to the models. This generates data in batches for each epoch. The advantages of this method are three-fold. It allows you to conserve memory by only having one batch of data in memory at a time, while also ensuring that your models never train on the exact same image twice, which prevents overfitting and exposes your model to much more variance. However the drawback of this method is that the CPU is used for the image augmentation, and as my CPU is not exactly state of the art, this method added 30 seconds to each epoch.
 
@@ -44,17 +44,17 @@ gen = ImageDataGenerator( # These are also the parameters I used in the notebook
     brightness_range = [0.9, 1.5], 
     rescale = 1./255.)
 
-flow = gen.flow_from_directory('PokemonData/Train') # This acts as a python generator and returns tuples of images and labels so we can use this to build a dataset.
+flow = gen.flow_from_directory('PokémonData/Train') # This acts as a python generator and returns tuples of images and labels so we can use this to build a dataset.
 ```
 
 Here is a sample of the augmented images for reference.
 
-![Training Images](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/data_example.jpg)
+![Training Images](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/data_example.jpg)
 
 ##### Model Design
-Three different models were trained on the data, each trained for 30 epochs. In all there was one scratch built model, and two transfer learning models made from VGG16 and Xception. For the scratch model, I designed it by starting with a very basic model, and making it more and more complex as needed by adding more layers, filters, and neurons. I'm sure I could have improved it even more but I am happy with the results that I got. For the transfer learning models, each model was loaded with its imagenet weights from the keras applications module, and the convolutional layers of each model were made untrainable in order to preserve those weights and avoid catastrophic forgetting. The tops of the models were removed and replaced with a dense layer and an output layer which accomodated the data. 
+Three different models were trained on the data, each trained for 30 epochs. In all there was one scratch built model, and two transfer learning models made from VGG16 and Xception. For the scratch model, I designed it by starting with a very basic model, and making it more and more complex as needed by adding more layers, filters, and neurons. I'm sure I could have improved it even more but I am happy with the results that I got. For the transfer learning models, each model was loaded with its ImageNet weights from the Keras applications module, and the convolutional layers of each model were made untrainable in order to preserve those weights and avoid catastrophic forgetting. The tops of the models were removed and replaced with a dense layer and an output layer which accommodated the data. 
 
-I tested several learning rates, though for the sake of simplicity I used the same optimizer for each model. I found that a learning rate of 0.0001 worked well for each model, though I did introduce one of the two callbacks I would end up using just in case. Callbacks in keras allow you to do a number of useful things during training. In this case, I used the ReduceLROnPlateau callback, which reduces the learning rate when a metric - in this case validation accuracy - hasn't improved in a certain number of epochs. Sometimes you can lose out on extra performance because your learning rate is too high, so this aims to help with that and squeeze out some extra performance during training. The second callback I used was the ModelCheckpoint callback, which I used to save the model whenever it reached a new peak validation accuracy. This meant that after training, even if the model overfit, the model that was saved would be the best model found during training.
+I tested several learning rates, though for the sake of simplicity I used the same optimizer for each model. I found that a learning rate of 0.0001 worked well for each model, though I did introduce one of the two callbacks I would end up using just in case. Callbacks in Keras allow you to do a number of useful things during training. In this case, I used the ReduceLROnPlateau callback, which reduces the learning rate when a metric - in this case validation accuracy - hasn't improved in a certain number of epochs. Sometimes you can lose out on extra performance because your learning rate is too high, so this aims to help with that and squeeze out some extra performance during training. The second callback I used was the ModelCheckpoint callback, which I used to save the model whenever it reached a new peak validation accuracy. This meant that after training, even if the model overfit, the model that was saved would be the best model found during training.
 
 The structures of each model are listed below:
 
@@ -182,8 +182,8 @@ After fine tuning, I was able to a fairly good place in terms of performance, at
        Max: 0.00010
        Min: 0.00010
   ```
-  ![Accuracy](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/scratch_model_accuracy.jpg)
-  ![Loss](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/scratch_model_loss.jpg)
+  ![Accuracy](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/scratch_model_accuracy.jpg)
+  ![Loss](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/scratch_model_loss.jpg)
   
 </details>
 <details>
@@ -206,8 +206,8 @@ After fine tuning, I was able to a fairly good place in terms of performance, at
        Max: 0.00010
        Min: 0.00000
   ```
-  ![Accuracy](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/vgg16_model_accuracy.jpg)
-  ![Loss](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/vgg16_model_loss.jpg)
+  ![Accuracy](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/vgg16_model_accuracy.jpg)
+  ![Loss](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/vgg16_model_loss.jpg)
 </details>
 <details>
   <summary>Xception (Transfer Learning)</summary>
@@ -229,28 +229,28 @@ After fine tuning, I was able to a fairly good place in terms of performance, at
        Max: 0.00010
        Min: 0.00010
   ```
-  ![Accuracy](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/xception_model_accuracy.jpg)
-  ![Loss](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/xception_model_loss.jpg)
+  ![Accuracy](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/xception_model_accuracy.jpg)
+  ![Loss](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/xception_model_loss.jpg)
 </details>
-As for how the models perform in a game of "Who's That Pokemon?!", the models each made predictions on 9 silhouettes of the same 9 pokemon. Here are the silhouettes for reference and in case you would like to play along:
+As for how the models perform in a game of "Who's That Pokémon?!", the models each made predictions on 9 silhouettes of the same 9 pokémon. Here are the silhouettes for reference and in case you would like to play along:
 
-![Silhouettes](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/Silhouettes.jpg)
+![Silhouettes](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/Silhouettes.jpg)
 
 And here are the answers and the predictions each model made:
 
-![Silhouette Predictions](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/silhouette_predictions.jpg)
+![Silhouette Predictions](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/silhouette_predictions.jpg)
 
-As you can see the scratch model performed the worst, seeming to favor Magnemite the majority of the time. In all the scratch model actually failed to guess even a single pokemon correctly. VGG16 performed better, getting Dugtrio, though still showing that favoritism, in this instance towards Rapidash. Xception performed the best managing to guess both Articuno and Rhydon, though overall none of the models performed especially well. Obviously, the models weren't trained to handle this use case though. If we wanted to do that, we would use silhouettes as training data. So, let's look at how the models perform when predicting on the full color versions instead:
+As you can see the scratch model performed the worst, seeming to favor Magnemite the majority of the time. In all the scratch model actually failed to guess even a single pokémon correctly. VGG16 performed better, getting Dugtrio, though still showing that favoritism, in this instance towards Rapidash. Xception performed the best managing to guess both Articuno and Rhydon, though overall none of the models performed especially well. Obviously, the models weren't trained to handle this use case though. If we wanted to do that, we would use silhouettes as training data. So, let's look at how the models perform when predicting on the full color versions instead:
 
-![Color Predictions](https://github.com/LinkWentz/whos-that-pokemon/blob/master/Plots/color_predictions.jpg)
+![Color Predictions](https://github.com/LinkWentz/whos-that-pokémon/blob/master/Plots/color_predictions.jpg)
 
-Here we can see the model performance is much more consistent, though not perfect. The scratch model, for its part. still fails to identify a single pokemon, and still favors Magnemite. The transfer learning models however perform much better. VGG16 and Xception both correctly identified 6 pokemon; in fact almost the same 6 save for Rhydon and Nidorina. They do fail to recognize Dodrio and Kingler however, which suggests that there is still many improvements to be made.
+Here we can see the model performance is much more consistent, though not perfect. The scratch model, for its part. still fails to identify a single pokémon, and still favors Magnemite. The transfer learning models however perform much better. VGG16 and Xception both correctly identified 6 pokémon; in fact almost the same 6 save for Rhydon and Nidorina. They do fail to recognize Dodrio and Kingler however, which suggests that there is still many improvements to be made.
 
-So after testing both a scratch built model and two transfer learning models, it appears that overall, transfer learning with imagenet weights is much better approach, or at least more efficient. Given time and more computing resources we could of course develop a much better scratch model, but as it stands, transfer learning appears to be not only a viable approach for this and similar tasks, but much easier to achieve good performance with.
+So after testing both a scratch built model and two transfer learning models, it appears that overall, transfer learning with ImageNet weights is much better approach, or at least more efficient. Given time and more computing resources we could of course develop a much better scratch model, but as it stands, transfer learning appears to be not only a viable approach for this and similar tasks, but much easier to achieve good performance with.
 
 ### Sources
-- [7,000 Labeled Pokemon](https://www.kaggle.com/lantian773030/pokemonclassification): The dataset used for this project.
-- [Pokemon Database](https://pokemondb.net/pokedex/national): The source for all the sprites used for "Who's That Pokemon"
+- [7,000 Labeled Pokémon](https://www.kaggle.com/lantian773030/pokémonclassification): The dataset used for this project.
+- [Pokémon Database](https://pokémondb.net/pokedex/national): The source for all the sprites used for "Who's That Pokémon"
 
 ### Dependencies
 - [Python 3.9.7](https://www.python.org/)
