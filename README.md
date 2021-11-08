@@ -1,4 +1,7 @@
 ### Summary
+The goal of this project is to make a image classifier which can identify any of the first generation pokemon. The idea behind this is that once a sufficiently accuracte classifier has been made, it can be used to build software similar to a pokdex, which is a device that can identify and provide information about any pokemon it is shown.
+
+To achieve this goal, I first loaded, resized, and randomly augmented the training data to make a total of 8000 training images and 2000 validation images. Those images were then used to train two models, one with a scratch made structure and randomized weights, and one made using VGG16 pretrained with ImageNet weights. The results were that the transfer learning model performed much better, attaining a valdation accuracy of ~78%, compared to the scratch built model's validation accuracy of ~47%.
 
 If you would prefer the article form of this project it can be found [here!]()
 
