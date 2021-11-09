@@ -1,9 +1,9 @@
 ### Summary
-The goal of this project is to make a image classifier which can identify any of the first generation pokemon. The idea behind this is that once a sufficiently accuracte classifier has been made, it can be used to build software similar to a pokdex, which is a device that can identify and provide information about any pokemon it is shown.
+The goal of this project is to make a image classifier which can identify any of the first generation pokémon. The idea behind this is that once a sufficiently accurate classifier has been made, it can be used to build software similar to a pokédex, which is a device that can identify and provide information about any pokémon it is shown.
 
-To achieve this goal, I first loaded, resized, and randomly augmented the training data to make a total of 8000 training images and 2000 validation images. Those images were then used to train two models, one with a scratch made structure and randomized weights, and one made using VGG16 pretrained with ImageNet weights. The results were that the transfer learning model performed much better, attaining a valdation accuracy of ~78%, compared to the scratch built model's validation accuracy of ~47%.
+To achieve this goal, I first loaded, resized, and randomly augmented the training data to make a total of 5000 training images and 2000 validation images. Those images were then used to train two models, one with a scratch made structure and randomized weights, and one made using VGG16 pretrained with ImageNet weights. I then trained both for 30 epochs. The results were that the transfer learning model performed much better, attaining a validation accuracy of ~73%, compared to the scratch built model's validation accuracy of ~38%.
 
-If you would prefer the article form of this project it can be found [here!]()
+If you would prefer the article form of this project it can be found [here!](https://linkwentz.medium.com/whos-that-pok%C3%A9mon-building-a-pok%C3%A9mon-identifier-in-keras-e8e1078f1b14)
 
 ### Directory
 ```
